@@ -9,20 +9,19 @@ const questions = [
         ]
     },
     {
+        question: "What year was JavaScript launched?",
+        answers: [
+            { text: "1996", correct: false },
+            { text: "1995", correct: true },
+            { text: "1994", correct: false }
+        ]
+    },
+    {
         question: "What does HTML stand for?",
         answers: [
             { text: "Hypertext Markup Language", correct: true },
             { text: "Hypertext Markdown Language", correct: false },
             { text: "Hyperloop Machine Language", correct: false }
-        ]
-    },
-    {
-        question: "Which CSS property is used to change the text color?",
-        answers: [
-            { text: "content-color", correct: false },
-            { text: "color", correct: true },
-            { text: "text-style", correct: false },
-            { text: "font-color", correct: false }
         ]
     }
 ];
@@ -41,7 +40,6 @@ const quizContent = document.getElementById('quiz-content');
 const resultScreen = document.getElementById('result-screen');
 
 function startQuiz() {
-    // Shuffling questions for a fresh experience
     shuffledQuestions = questions.sort(() => Math.random() - 0.5);
     currentQuestionIndex = 0;
     score = 0;
@@ -53,7 +51,6 @@ function setNextQuestion() {
     resetState();
     showQuestion(shuffledQuestions[currentQuestionIndex]);
     startTimer();
-    updateProgressBar();
 }
 
 function showQuestion(question) {
@@ -100,6 +97,7 @@ function selectAnswer(e) {
 
     clearInterval(timerInterval);
     nextButton.classList.remove('hide');
+    updateProgressBar();
 }
 
 function autoCheckAnswer() {
@@ -116,7 +114,7 @@ function setStatusClass(element, correct) {
 }
 
 function updateProgressBar() {
-    const progress = (currentQuestionIndex / shuffledQuestions.length) * 100;
+    const progress = ((currentQuestionIndex + 1) / shuffledQuestions.length) * 100;
     progressBar.style.width = `${progress}%`;
 }
 
@@ -130,7 +128,6 @@ nextButton.addEventListener('click', () => {
 });
 
 function showResults() {
-    progressBar.style.width = `100%`;
     quizContent.classList.add('hide');
     resultScreen.classList.remove('hide');
     document.getElementById('final-score').innerText = score;
